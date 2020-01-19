@@ -3,8 +3,9 @@ class IndecisionApp extends React.Component {
 		super(props);
 		this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
 		this.handlePick = this.handlePick.bind(this);
+		this.handleAddOption = this.handleAddOption.bind(this);
 		this.state = {
-			options: ['Thing one', 'Thing two', 'Thing four']
+			options: []
 		}
 	}
 	handleDeleteOptions() {
@@ -14,10 +15,23 @@ class IndecisionApp extends React.Component {
 			};
 		});
 	}
-	handlePick () {
+	handlePick() {
 		const randomNum = Math.floor(Math.random() * this.state.options.length);
 		const option = this.state.options[randomNum];
 		alert(option);
+	}
+	handleAddOption(option) {
+		if (!option) {
+			return 'Enter valid value to add item';
+		} else if (this.state.options.indexOf(option) > -1) {
+			return 'This option already exists';
+		}
+
+		this.setState((prevState) => {
+			return {
+				options: prevState.options.concat(option)
+			};
+		});
 	}
 	render() {
 		const title = 'Indecision'
@@ -25,16 +39,18 @@ class IndecisionApp extends React.Component {
 
 		return (
 			<div>
-				<Header title={title} subtitle={subTitle} /> 
-				<Action 
+				<Header title={title} subtitle={subTitle} />
+				<Action
 					hasOptions={this.state.options.length > 0}
 					handlePick={this.handlePick}
 				/>
-				<Options 
+				<Options
 					options={this.state.options}
 					handleDeleteOptions={this.handleDeleteOptions}
 				/>
-				<AddOption />
+				<AddOption
+					handleAddOption={this.handleAddOption}
+				/>
 			</div>
 		);
 	}
@@ -55,7 +71,7 @@ class Action extends React.Component {
 	render() {
 		return (
 			<div>
-				<button 
+				<button
 					onClick={this.props.handlePick}
 					disabled={!this.props.hasOptions}
 				>
@@ -71,9 +87,9 @@ class Options extends React.Component {
 		const options = this.props.options;
 		return (
 			<div>
-			<button onClick={this.props.handleDeleteOptions}>Remove All</button>
+				<button onClick={this.props.handleDeleteOptions}>Remove All</button>
 				{
-				 options.map((option) => <Option key={option} optionText={option}/>)
+					options.map((option) => <Option key={option} optionText={option} />)
 				}
 			</div>
 		);
@@ -91,16 +107,25 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleAddOption = this.handleAddOption.bind(this);
+		this.state = {
+			error: undefined
+		}
+	}
 	handleAddOption(e) {
 		e.preventDefault();
 		const optionValue = e.target.elements.option.value;
-		if (optionValue) {
-			alert(optionValue);
-		}
+		const error = this.props.handleAddOption(optionValue);
+		this.setState(() => {
+			return { error };
+		});
 	}
 	render() {
 		return (
 			<div>
+				{this.state.error && <p>{this.state.error}</p>}
 				<form onSubmit={this.handleAddOption}>
 					<input type='text' name="option" />
 					<button>Add Option</button>
