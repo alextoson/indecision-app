@@ -21,12 +21,27 @@ var IndecisionApp = function (_React$Component) {
 		_this.handleAddOption = _this.handleAddOption.bind(_this);
 		_this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
 		_this.state = {
-			options: []
+			options: props.options
 		};
 		return _this;
 	}
 
 	_createClass(IndecisionApp, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			console.log('fetching data');
+		}
+	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate(prevProps, prevState) {
+			console.log('saving data');
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			console.log('componentWillUnmount');
+		}
+	}, {
 		key: 'handleDeleteOptions',
 		value: function handleDeleteOptions() {
 			this.setState(function () {
@@ -90,6 +105,10 @@ var IndecisionApp = function (_React$Component) {
 
 	return IndecisionApp;
 }(React.Component);
+
+IndecisionApp.defaultProps = {
+	options: []
+};
 
 var Header = function Header(props) {
 	return React.createElement(
