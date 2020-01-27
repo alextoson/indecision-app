@@ -1,2 +1,4 @@
-console.log("app.js is running");
-console.log("test");
+import { isAdult, canDrink } from './person';
+
+console.log(isAdult(18));
+console.log(canDrink(18))
