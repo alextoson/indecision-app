@@ -5,9 +5,9 @@
   "author": "Alex Toson",
   "license": "MIT",
   "scripts": {
-    "serve": "live-server public",
-    "build": "webpack --watch",
-    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
+    "serve": "live-server public/",
+    "build": "webpack",
+    "dev-server": "webpack-dev-server"
   },
   "dependencies": {
     "babel-cli": "6.24.1",
@@ -19,6 +19,8 @@
     "react": "^16.0.0",
     "react-dom": "16.0.0",
     "validator": "8.0.0",
-    "webpack": "3.1.0"
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
   }
 }
